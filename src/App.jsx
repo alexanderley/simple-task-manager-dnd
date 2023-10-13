@@ -55,6 +55,8 @@
 import React, { useState } from "react";
 import "./App.css";
 
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 function App() {
   const [count, setCount] = useState(0);
 
