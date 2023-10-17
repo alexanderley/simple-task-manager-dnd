@@ -121,11 +121,15 @@ function App() {
         <DragDropContext onDragEnd={handleDragDrop}>
           <Droppable droppableId="ROOT" type="group">
             {(provided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef}>
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className="flexRow"
+              >
                 {tasks.map((taskGroup, index) => (
                   <Draggable
                     draggableId={taskGroup.id}
-                    key={taskGroup.index}
+                    key={taskGroup.id}
                     index={index}
                   >
                     {(provided) => (
