@@ -119,7 +119,7 @@ function App() {
       <h1>Todos Application</h1>
       <div className="stepContainer">
         <DragDropContext onDragEnd={handleDragDrop}>
-          <Droppable droppableId="ROOT" type="group">
+          <Droppable droppableId="ROOT" type="group" direction="horizontal">
             {(provided) => (
               <div
                 {...provided.droppableProps}
@@ -152,6 +152,7 @@ function App() {
                     )}
                   </Draggable>
                 ))}
+                {provided.placeholder}
               </div>
             )}
           </Droppable>

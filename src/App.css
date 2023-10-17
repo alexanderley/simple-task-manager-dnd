@@ -36,7 +36,15 @@
 }
 
 .flexRow {
+  /* display: inline-flex; */
+  /* flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px; */
   display: flex;
-  flex-direction: row;
-  gap: 15px;
+  -webkit-box-align: start;
+  align-items: start;
+  /* width: 200px;
+  height: 1000px; */
+  flex-wrap: wrap;
+  gap: 30px;
 }
