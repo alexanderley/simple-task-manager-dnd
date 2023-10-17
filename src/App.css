@@ -21,6 +21,7 @@
   padding: 20px;
   border-radius: 10px;
   width: 150px;
+  margin: 15px;
 }
 
 .taskContainer {
@@ -33,4 +34,16 @@
   background-color: rgb(40, 29, 81);
   border-radius: 5px;
   padding: 15px 15px;
+}
+
+.flexRow {
+  /* display: inline-flex; */
+  /* flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px; */
+  display: flex;
+  -webkit-box-align: start;
+  align-items: start;
+  flex-wrap: wrap;
+  /* gap: 30px; */
 }
