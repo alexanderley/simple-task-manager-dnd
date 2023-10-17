@@ -112,6 +112,30 @@ function App() {
     console.log("Results: ", results);
 
     const { source, destination, type } = results;
+
+    if (!destination) return;
+
+    if (
+      source.droppableId === destination.droppableId &&
+      source.index === destination.index
+    )
+      return;
+
+    // Reordering functionaly of each of the task columnns
+    if (type === "column") {
+      const reorderedTasks = [...tasks];
+      const sourceIndex = source.index;
+      const destinationIndex = destination.index;
+
+      const [removedTask] = reorderedTasks.splice(sourceIndex, 1);
+
+      reorderedTasks.splice(destinationIndex, 0, removedTask);
+
+      // console.log("removed task: ", removedTask);
+      // console.log('reorder array: ', re)
+
+      return setTasks(reorderedTasks);
+    }
   };
 
   return (
@@ -119,7 +143,7 @@ function App() {
       <h1>Todos Application</h1>
       <div className="stepContainer">
         <DragDropContext onDragEnd={handleDragDrop}>
-          <Droppable droppableId="ROOT" type="group" direction="horizontal">
+          <Droppable droppableId="ROOT" type="column" direction="horizontal">
             {(provided) => (
               <div
                 {...provided.droppableProps}
@@ -141,7 +165,7 @@ function App() {
                         <div className="step" key={taskGroup.id}>
                           <h3>{taskGroup.step}</h3>
                           <div className="taskContainer">
-                            {taskGroup.items.map((task, taskIndex) => (
+                            {taskGroup.items.map((task) => (
                               <div className="task" key={task.id}>
                                 {task.name}
                               </div>
