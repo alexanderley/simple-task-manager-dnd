@@ -5,7 +5,7 @@
   text-align: center;
 }
 
-.stepContainer {
+.draftContainer {
   display: flex;
   background-color: rgb(14, 14, 14);
   gap: 15px;
@@ -16,7 +16,7 @@
   justify-content: center;
 }
 
-.step {
+.board {
   background-color: rgb(18, 19, 23);
   padding: 20px;
   border-radius: 10px;
@@ -24,26 +24,22 @@
   margin: 15px;
 }
 
-.taskContainer {
+.draftContainer {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.task {
+.draft {
   background-color: rgb(40, 29, 81);
   border-radius: 5px;
   padding: 15px 15px;
+  margin: 10px;
 }
 
 .flexRow {
-  /* display: inline-flex; */
-  /* flex-direction: row;
-  flex-wrap: wrap;
-  gap: 15px; */
   display: flex;
   -webkit-box-align: start;
   align-items: start;
   flex-wrap: wrap;
-  /* gap: 30px; */
 }
