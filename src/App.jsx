@@ -78,6 +78,43 @@ function App() {
 
       return setDrafts(reordereddraft);
     }
+
+    // 2.) add task change functionality
+    console.log("task drop", { destination, source });
+    const taskSourceIndex = drafts.findIndex(
+      (draft) => draft.id === source.droppableId
+    );
+
+    const taskDestinationIndex = drafts.findIndex(
+      (draft) => draft.id === destination.droppableId
+    );
+
+    const newSourceItems = [...drafts[taskSourceIndex].tasks];
+
+    const newDestinationItems =
+      source.droppableId !== destination.droppableId
+        ? [...drafts[taskDestinationIndex].tasks]
+        : newSourceItems;
+
+    console.log("newDestinationItems: ", newDestinationItems);
+
+    // remove the item from the old array
+    const [deletedItem] = newSourceItems.splice(source.index, 1);
+
+    newDestinationItems.splice(destination.index, 0, deletedItem);
+    const newDrafts = [...drafts];
+
+    newDrafts[taskSourceIndex] = {
+      ...drafts[taskSourceIndex],
+      tasks: newSourceItems,
+    };
+
+    newDrafts[taskDestinationIndex] = {
+      ...drafts[taskDestinationIndex],
+      tasks: newDestinationItems,
+    };
+
+    setDrafts(newDrafts);
   };
 
   return (
