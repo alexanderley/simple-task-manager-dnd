@@ -67,7 +67,6 @@ function App() {
     )
       return;
 
-    // Reordering functionaly of each of the draft columnns
     if (type === "column") {
       const reordereddraft = [...draft];
       const sourceIndex = source.index;
