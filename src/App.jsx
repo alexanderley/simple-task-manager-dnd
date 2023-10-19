@@ -6,7 +6,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 const DATA = [
   {
     id: "0e2f0db1-5457-46b0-949e-8032d2f9997a",
-    draft: "Todo",
+    name: "Todo",
     tasks: [
       { id: "26fd50b3-3841-496e-8b32-73636f6f4197", name: "Change Fonts" },
       { id: "b0ee9d50-d0a6-46f8-96e3-7f3f0f9a2525", name: "Adapt CSS" },
@@ -18,7 +18,7 @@ const DATA = [
   },
   {
     id: "487f68b4-1746-438c-920e-d67b7df46247",
-    draft: "In Progress",
+    name: "In Progress",
     tasks: [
       { id: "deadbeef-abcd-1234-5678-badcoffeebadc0", name: "Check Changes" },
       {
@@ -29,7 +29,7 @@ const DATA = [
   },
   {
     id: "abcdef12-34ab-cdef-5678-901234567890",
-    draft: "Done",
+    name: "Done",
     tasks: [
       {
         id: "95ee6a5d-f927-4579-8c15-2b4eb86210ae",
@@ -40,7 +40,7 @@ const DATA = [
   },
   {
     id: "98765432-abcdef-1234-abcd-567812345abc",
-    draft: "Approved",
+    name: "Approved",
     tasks: [
       {
         id: "960cbbcf-89a0-4d79-aa8e-56abbc15eacc",
@@ -92,10 +92,10 @@ function App() {
                 ref={provided.innerRef}
                 className="flexRow"
               >
-                {drafts.map((draftGroup, index) => (
+                {drafts.map((draft, index) => (
                   <Draggable
-                    draggableId={draftGroup.id}
-                    key={draftGroup.id}
+                    draggableId={draft.id}
+                    key={draft.id}
                     index={index}
                   >
                     {(provided) => (
@@ -104,15 +104,16 @@ function App() {
                         {...provided.draggableProps}
                         ref={provided.innerRef}
                       >
-                        <div className="draft" key={draftGroup.id}>
-                          <h3>{draftGroup.draft}</h3>
-                          <div className="taskContainer">
-                            {draftGroup.tasks.map((draft) => (
-                              <div className="task" key={draft.id}>
-                                {draft.name}
+                        <div className="draft" key={draft.id}>
+                          <h3>{draft.name}</h3>
+                          {/* <div className="taskContainer">
+                            {draft.tasks.map((task) => (
+                              <div className="task" key={task.id}>
+                                {task.name}
                               </div>
                             ))}
-                          </div>
+                          </div> */}
+                          {<TasksList {...draft} />}
                         </div>
                       </div>
                     )}
@@ -132,7 +133,26 @@ function TasksList({ name, tasks, id }) {
   return (
     <Droppable droppableId={id}>
       {(provided) => (
-        <div {...provided.droppableProps} ref={provided.innerRef}></div>
+        <div {...provided.droppableProps} ref={provided.innerRef}>
+          <div className="taskContainer">
+            {tasks.map((task, index) => (
+              <Draggable draggableId={task.id} index={index} key={task.id}>
+                {(provided) => (
+                  <div
+                    className="task"
+                    key={index}
+                    {...provided.dragHandleProps}
+                    {...provided.draggableProps}
+                    ref={provided.innerRef}
+                  >
+                    {task.name}
+                  </div>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </div>
+        </div>
       )}
     </Droppable>
   );
