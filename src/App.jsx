@@ -6,7 +6,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 const DATA = [
   {
     id: "0e2f0db1-5457-46b0-949e-8032d2f9997a",
-    step: "Todo",
+    draft: "Todo",
     items: [
       { id: "26fd50b3-3841-496e-8b32-73636f6f4197", name: "Change Fonts" },
       { id: "b0ee9d50-d0a6-46f8-96e3-7f3f0f9a2525", name: "Adapt CSS" },
@@ -18,7 +18,7 @@ const DATA = [
   },
   {
     id: "487f68b4-1746-438c-920e-d67b7df46247",
-    step: "In Progress",
+    draft: "In Progress",
     items: [
       { id: "deadbeef-abcd-1234-5678-badcoffeebadc0", name: "Check Changes" },
       {
@@ -29,7 +29,7 @@ const DATA = [
   },
   {
     id: "abcdef12-34ab-cdef-5678-901234567890",
-    step: "Done",
+    draft: "Done",
     items: [
       {
         id: "95ee6a5d-f927-4579-8c15-2b4eb86210ae",
@@ -40,7 +40,7 @@ const DATA = [
   },
   {
     id: "98765432-abcdef-1234-abcd-567812345abc",
-    step: "Approved",
+    draft: "Approved",
     items: [
       {
         id: "960cbbcf-89a0-4d79-aa8e-56abbc15eacc",
@@ -52,7 +52,7 @@ const DATA = [
 ];
 
 function App() {
-  const [tasks, setTasks] = useState(DATA);
+  const [draft, setDraft] = useState(DATA);
 
   const handleDragDrop = (results) => {
     console.log("Results: ", results);
@@ -67,24 +67,23 @@ function App() {
     )
       return;
 
-    // Reordering functionaly of each of the task columnns
     if (type === "column") {
-      const reorderedTasks = [...tasks];
+      const reordereddraft = [...draft];
       const sourceIndex = source.index;
       const destinationIndex = destination.index;
 
-      const [removedTask] = reorderedTasks.splice(sourceIndex, 1);
+      const [removedDraft] = reordereddraft.splice(sourceIndex, 1);
 
-      reorderedTasks.splice(destinationIndex, 0, removedTask);
+      reordereddraft.splice(destinationIndex, 0, removedDraft);
 
-      return setTasks(reorderedTasks);
+      return setDraft(reordereddraft);
     }
   };
 
   return (
     <>
       <h1>Todos Application</h1>
-      <div className="stepContainer">
+      <div className="draftContainer">
         <DragDropContext onDragEnd={handleDragDrop}>
           <Droppable droppableId="ROOT" type="column" direction="horizontal">
             {(provided) => (
@@ -93,10 +92,10 @@ function App() {
                 ref={provided.innerRef}
                 className="flexRow"
               >
-                {tasks.map((taskGroup, index) => (
+                {draft.map((draftGroup, index) => (
                   <Draggable
-                    draggableId={taskGroup.id}
-                    key={taskGroup.id}
+                    draggableId={draftGroup.id}
+                    key={draftGroup.id}
                     index={index}
                   >
                     {(provided) => (
@@ -105,12 +104,12 @@ function App() {
                         {...provided.draggableProps}
                         ref={provided.innerRef}
                       >
-                        <div className="step" key={taskGroup.id}>
-                          <h3>{taskGroup.step}</h3>
+                        <div className="board" key={draftGroup.id}>
+                          <h3>{draftGroup.draft}</h3>
                           <div className="taskContainer">
-                            {taskGroup.items.map((task) => (
-                              <div className="task" key={task.id}>
-                                {task.name}
+                            {draftGroup.items.map((draft) => (
+                              <div className="draft" key={draft.id}>
+                                {draft.name}
                               </div>
                             ))}
                           </div>
@@ -123,18 +122,6 @@ function App() {
               </div>
             )}
           </Droppable>
-          {/* {tasks.map((taskGroup) => (
-            <div className="step" key={taskGroup.id}>
-              <h3>{taskGroup.step}</h3>
-              <div className="taskContainer">
-                {taskGroup.items.map((task, taskIndex) => (
-                  <div className="task" key={task.id}>
-                    {task.name}
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))} */}
         </DragDropContext>
       </div>
     </>
